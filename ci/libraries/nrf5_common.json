@@ -280,7 +280,8 @@
         "nrf5_mtx",
         "nrf5_nrfx_hal",
         "nrf5_sdh",
-        "nrf5_section"
+        "nrf5_section",
+        "nrf5_app_timer"
       ]
     },
     "includes": {

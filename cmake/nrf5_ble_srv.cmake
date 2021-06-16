@@ -1434,6 +1434,34 @@ if(NRF5_SDK_VERSION VERSION_EQUAL 16.0.0)
   )
 endif()
 
+#dfu service
+add_library(nrf5_ble_srv_dfu OBJECT EXCLUDE_FROM_ALL
+        ${NRF5_SDK_PATH}/components/ble/ble_services/ble_dfu/ble_dfu.c
+        ${NRF5_SDK_PATH}/components/ble/ble_services/ble_dfu/ble_dfu_bonded.c
+        ${NRF5_SDK_PATH}/components/ble/ble_services/ble_dfu/ble_dfu_unbonded.c
+        ${NRF5_SDK_PATH}/components/
+        )
+
+target_include_directories(nrf5_ble_srv_dfu PUBLIC
+        ${NRF5_SDK_PATH}/components/ble/ble_services/ble_dfu
+        ${NRF5_SDK_PATH}/components/libraries/bootloader/ble_dfu
+        ${NRF5_SDK_PATH}/components/libraries/bootloader/dfu
+        ${NRF5_SDK_PATH}/components/libraries/bootloader
+        )
+
+target_link_libraries(nrf5_ble_srv_dfu PUBLIC
+        nrf5_dfu_svci
+        nrf5_ble_peer_manager
+        nrf5_svc
+        #nrf5_dfu
+        nrf5_ble_common
+        #nrf5_ble_racp
+        )
+
+list(APPEND NRF5_LIBRARY_NRF5_BLE_SRV_DFU_DEPENDENCIES
+        nrf5_dfu_svci
+        nrf5_ble_srv_dfu
+        )
 # BLE Eddystone library
 add_library(nrf5_ble_srv_eddystone OBJECT EXCLUDE_FROM_ALL
   "${NRF5_SDK_PATH}/components/ble/ble_services/ble_escs/nrf_ble_escs.c"
