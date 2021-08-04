@@ -708,7 +708,13 @@ list(APPEND NRF5_LIBRARY_NRF5_DFU_DEPENDENCIES
 # DFU initialization (SVCI)
 add_library(nrf5_dfu_svci OBJECT EXCLUDE_FROM_ALL
   "${NRF5_SDK_PATH}/components/libraries/bootloader/dfu/nrf_dfu_svci.c"
+  "${NRF5_SDK_PATH}/components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c"
 )
+target_include_directories(nrf5_dfu_svci PUBLIC
+        "${NRF5_SDK_PATH}/components/libraries/svc"
+        "${NRF5_SDK_PATH}/components/libraries/bootloader/ble_dfu"
+        "${NRF5_SDK_PATH}/components/libraries/bootloader/dfu"
+        )
 target_link_libraries(nrf5_dfu_svci PUBLIC
   nrf5_app_util_platform
   nrf5_log

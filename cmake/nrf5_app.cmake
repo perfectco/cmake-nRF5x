@@ -157,12 +157,14 @@ add_library(nrf5_app_timer OBJECT EXCLUDE_FROM_ALL
 target_include_directories(nrf5_app_timer PUBLIC
   "${NRF5_SDK_PATH}/components/libraries/timer"
 )
+
 target_link_libraries(nrf5_app_timer PUBLIC
   nrf5_app_scheduler
-  nrf5_app_timer_fwd
+#  nrf5_app_timer_fwd
   nrf5_delay
   nrf5_nrfx_hal
 )
+
 list(APPEND NRF5_LIBRARY_NRF5_APP_TIMER_DEPENDENCIES
   nrf5_app_error
   nrf5_app_scheduler

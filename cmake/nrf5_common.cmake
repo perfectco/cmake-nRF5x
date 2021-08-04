@@ -341,7 +341,9 @@ target_link_libraries(nrf5_pwr_mgmt PUBLIC
   nrf5_nrfx_hal
   nrf5_sdh
   nrf5_section
+  nrf5_app_timer
 )
+
 list(APPEND NRF5_LIBRARY_NRF5_PWR_MGMT_DEPENDENCIES
   nrf5_app_scheduler
   nrf5_app_util_platform
