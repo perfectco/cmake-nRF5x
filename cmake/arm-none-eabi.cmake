@@ -30,16 +30,26 @@ set(CMAKE_SYSTEM_PROCESSOR ARM)
 # Set toolchain paths
 set(TOOLCHAIN arm-none-eabi)
 
-set(TOOLCHAIN_BIN_DIR "${TOOLCHAIN_PREFIX}/bin")
-set(TOOLCHAIN_INC_DIR "${TOOLCHAIN_PREFIX}/${TOOLCHAIN}/include")
-set(TOOLCHAIN_LIB_DIR "${TOOLCHAIN_PREFIX}/${TOOLCHAIN}/lib")
-
 # Set system depended extensions
 if(WIN32)
   set(TOOLCHAIN_EXT ".exe" )
 else()
   set(TOOLCHAIN_EXT "" )
 endif()
+
+# If TOOLCHAIN_PREFIX not specified, try to find compiler and use its path to set PREFIX
+if(NOT TOOLCHAIN_PREFIX)
+  find_program(GCC_LOCATION ${TOOLCHAIN}-gcc${TOOLCHAIN_EXT} NO_CACHE)
+  get_filename_component(GCC_LOCATION_REAL ${GCC_LOCATION} REALPATH)
+  cmake_path(GET GCC_LOCATION_REAL PARENT_PATH GCC_DIR)
+  cmake_path(GET GCC_DIR PARENT_PATH GCC_DIR)
+  message(STATUS "TOOLCHAIN_PREFIX not specified, using ${GCC_DIR}")
+  set(TOOLCHAIN_PREFIX ${GCC_DIR})
+endif()
+
+set(TOOLCHAIN_BIN_DIR "${TOOLCHAIN_PREFIX}/bin")
+set(TOOLCHAIN_INC_DIR "${TOOLCHAIN_PREFIX}/${TOOLCHAIN}/include")
+set(TOOLCHAIN_LIB_DIR "${TOOLCHAIN_PREFIX}/${TOOLCHAIN}/lib")
 
 # Perform compiler test with static library
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
